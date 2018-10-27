@@ -21,53 +21,74 @@
 public class Code5 {
 
     public static void main(String[] args) {
-        System.out.println(longestPalindrome("babad"));
+        System.out.println(longestPalindrome("a"));
     }
 
     public static String longestPalindrome(String s) {
-        int max1 = 0, max2 = 1,l,r, m1,m2;
+        int max1 = 0, max2 = 0,l,r, mod = 0;
         int length = s.length();
-        String s1 = "",s2 = "";
+        String s1 = "",s2 = "", modStr;
         for(int i= 0;i < length;i++) {
             r = i + 1;
             l = i;
             //两种模式 bb aba
             if(r < length) {
+                modStr = "";
                 //bb
                 while(true) {
                     if(l >=0 && r < length) {
                         if(s.charAt(l) == s.charAt(r)) {
-                            s1= s.charAt(l) + s1 + s.charAt(r);
-                            max1 = max1 + 2;
+                            modStr= s.charAt(l) + modStr + s.charAt(r);
+                            mod = mod + 2;
                             l--;
                             r++;
                         } else {
+                            if(mod > max1) {
+                                max1 = mod;
+                                s1 = modStr;
+                            }
                             break;
                         }
                     }  else {
+                        if(mod > max1) {
+                            max1 = mod;
+                            s1 = modStr;
+                        }
                         break;
                     }
                 }
 
                 //aba
+                mod = 1;
                 r = i + 1;
                 l = i - 1;
-                s2 = s.charAt(i) + "";
+                modStr = s.charAt(i) + "";
                 while(true) {
                     if(l >=0 && r < length) {
                         if(s.charAt(l) == s.charAt(r)) {
-                            max2 = max2 + 2;
-                            s2 = s.charAt(l) + s2 + s.charAt(r);
+                            mod = mod + 2;
+                            modStr = s.charAt(l) + modStr + s.charAt(r);
                             l--;
                             r++;
                         } else {
+                            if(mod > max2) {
+                                max2 = mod;
+                                s2 = modStr;
+                            }
                             break;
                         }
                     }  else {
+                        if(mod > max2) {
+                            max2 = mod;
+                            s2 = modStr;
+                        }
                         break;
                     }
                 }
             } else {
+                if(i == 0) {
+                    s2 = s.charAt(i) + "";
+                }
                 break;
             }
         }
